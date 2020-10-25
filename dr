@@ -1,0 +1,1 @@
+docker run --cap-add=CAP_SYS_ADMIN -v "$(pwd):/app" -p 8443:8443 -p 5001:5000/tcp -p 3000:3000 --device /dev/video0:/dev/video0 rs:latest

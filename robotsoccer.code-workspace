@@ -1,0 +1,18 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"name": "soccerbot",
+			"path": "soccerbot"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"*.ipp": "cpp",
+			"optional": "cpp",
+			"system_error": "cpp"
+		}
+	}
+}
