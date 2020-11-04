@@ -1,6 +1,5 @@
 #include <Arduino.h>
 #include <MeShield.h>
-#include <ArduinoJson.h>
 
 MeRGBLed led1(PORT_3, SLOT1, 15);   /* parameter description: port, slot, led number */
 MeRGBLed led2(PORT_3, SLOT2, 15);
@@ -9,8 +8,8 @@ MeDCMotor motor1(M1);
 MeDCMotor motor2(M2);
 
 int16_t bri = 0, st = 0;
-uint8_t motorSpeed = 0;
-StaticJsonDocument<255> doc;
+uint8_t motorSpeed = 100;
+int loopcount = 0;
 
 void setup() {
   // initialize LED digital pin as an output.
@@ -25,10 +24,20 @@ void setup() {
 }
 
 void loop() {
+  loopcount++;
+  Serial.println(loopcount);
+  Serial.print(F("\n"));
 
-  Serial.print(F("before deserializeJson()"));
-  DeserializationError err = deserializeJson(doc, Serial);
-  Serial.print(F("after deserializeJson()"));
+  if (loopcount % 2){
+    led1.setColor(1, 255, 0, 0); // parameter description: led number, red, green, blue
+    led1.setColor(2, 0, 255, 0); // parameter description: led number, red, green, blue
+    led1.show();
+  }
+  else{
+    led1.setColor(1, 0, 255, 0); // parameter description: led number, red, green, blue
+    led1.setColor(2, 255, 0, 0); // parameter description: led number, red, green, blue
+    led1.show();
+  }
 
   /*JsonObject obj = doc.as<JsonObject>();
   for (JsonPair p : obj) {
@@ -39,7 +48,7 @@ void loop() {
   */
     
 
-  /*
+  
 
   motor1.run(motorSpeed); // value: between -255 and 255.
   motor2.run(motorSpeed); // value: between -255 and 255.
@@ -82,5 +91,5 @@ void loop() {
   led1.show();
   led2.show();
   delay(20);
-*/
+
 }
