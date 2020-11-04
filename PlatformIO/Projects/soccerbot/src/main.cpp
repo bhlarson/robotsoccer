@@ -58,57 +58,28 @@ void loop() {
 
   }
 
-  if (loopcount % 2){
-    led1.setColor(1, 255, 0, 0); // parameter description: led number, red, green, blue
-    led1.setColor(2, 0, 255, 0); // parameter description: led number, red, green, blue
-    led1.show();
-  }
-  else{
-    led1.setColor(1, 0, 255, 0); // parameter description: led number, red, green, blue
-    led1.setColor(2, 255, 0, 0); // parameter description: led number, red, green, blue
-    led1.show();
-  }
+  if (loopcount % 1000){
+    passes =  loopcount/1000
+    if(passes%2)
+    {
+      led1.setColor(1, 255, 0, 0); // parameter description: led number, red, green, blue
+      led1.setColor(2, 0, 255, 0); // parameter description: led number, red, green, blue
+      led1.show();
+    }
+    else
+    {
+      led1.setColor(1, 0, 255, 0); // parameter description: led number, red, green, blue
+      led1.setColor(2, 255, 0, 0); // parameter description: led number, red, green, blue
+      led1.show();
+    }
 
   motor1.run(motorSpeed); // value: between -255 and 255.
   motor2.run(motorSpeed); // value: between -255 and 255.
   // turn the LED on (HIGH is the voltage level)
-  digitalWrite(LED_BUILTIN, HIGH);
-  // wait for a second
-  delay(1000);
-
-  motor1.run(-motorSpeed); // value: between -255 and 255.
-  motor2.run(-motorSpeed); // value: between -255 and 255.
+  //digitalWrite(LED_BUILTIN, HIGH);
 
   // turn the LED off by making the voltage LOW
-  digitalWrite(LED_BUILTIN, LOW);
-   // wait for a second
-  delay(1000);
+  //digitalWrite(LED_BUILTIN, LOW);
 
-
-  if(bri >= 100)
-  {
-    st = 1;
-  }
-  if(bri <= 0)
-  {
-    st = 0;
-  }
-
-  if(st)
-  {
-    bri--;
-  }
-  else
-  {
-    bri++;
-  }
-  for(int16_t t = 0; t < 15; t++)
-  {
-    led1.setColorAt(t, bri, bri, bri); // parameter description: led number, red, green, blue, flash mode
-    led2.setColorAt(t, bri, bri, bri);
-  }
-  led1.show();
-  led2.show();
-  delay(20);
 
 }
