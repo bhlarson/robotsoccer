@@ -9,10 +9,11 @@ MeDCMotor motor2(M2);
 
 int16_t bri = 0, st = 0;
 uint8_t device = 0;
-int8_t motorSpeed = 0;
 int loopcount = 0;
 const byte numChars = 32;
 char receivedChars[numChars]; // an array to store the received data
+int speed = 0;
+int direction = 0;
 
 void setup() {
   // initialize LED digital pin as an output.
@@ -42,10 +43,38 @@ bool recvWithEndMarker() {
     }
   }
   else {
-    receivedChars[ndx] = '\0'; // terminate the string
-    int speed = atoi(receivedChars);
-    motor1.run(speed); // value: between -255 and 255.
-    motor2.run(speed); // value: between -255 and 255.
+    if(ndx >= 6){
+      receivedChars[ndx] = '\0'; // terminate the string
+      int value = atoi(receivedChars+2);
+      receivedChars[2] = '\0';
+      int device = atoi(receivedChars);
+
+      switch(device)
+      {
+        case 1:
+          speed = value;
+          break;
+        case 2:
+          direction = value;
+          break;
+          
+      }
+
+      if(device == 1 || device == 2)
+      {
+        int speed1 = speed-direction;
+        int speed2 = -(speed+direction);
+
+        if(speed1 > 255) speed1 = 255;
+        if(speed1 < -255) speed1 = -255;
+        if(speed2 > 255) speed2 = 255;
+        if(speed2 < -255) speed2 = -255;
+
+        motor1.run(speed1); // value: between -255 and 255.
+        motor2.run(speed2); // value: between -255 and 255.
+      }
+    }
+
     /*if(ndx > 6)
     {
       int8_t speed;
